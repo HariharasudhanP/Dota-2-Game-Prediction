@@ -1,0 +1,20 @@
+import pandas as pd
+import sys
+df=pd.read_csv('https://s3.amazonaws.com/hr-testcases/368/assets/trainingdata.txt',sep=',',engine="python",header=None, index_col=False )
+nl = df[0].unique().tolist()
+cat = list(range(len(nl)))
+mapping = {nl[i]: i for i in cat}
+df[10] = df[10]-1
+X = df[[0,1,2,3,4,5,6,7,8,9]]
+y = df[10]
+from sklearn.linear_model import LogisticRegression
+logistic_regression= LogisticRegression()
+logistic_regression.fit(X,y)
+
+n= int(input())
+df_list = [input().strip().split(',') for i in range(n)]
+df_t = pd.DataFrame(df_list, columns=headers)
+df_t = df_t.replace(mapping)
+y_pred = logistic_regression.predict(df_t)+1
+print(*y_pred, sep ='\n')
+df_t = pd.DataFrame(df_list, columns=headers) df_t = df_t.replace(mapping) y_pred = logistic_regression.predict(df_t)+1 print(*y_pred, sep ='\n')
